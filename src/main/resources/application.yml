@@ -1,1 +1,12 @@
+spring:
+  r2dbc:
+    url: r2dbc:h2:mem:///userdb
+    username:
+    password:
 
+server:
+  port: 8082
+
+logging:
+  level:
+    io.r2dbc.h2: DEBUG # for queries

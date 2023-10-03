@@ -11,6 +11,6 @@ import reactor.core.publisher.Mono
 interface UserRepository : ReactiveCrudRepository<User, Int> {
 
     @Modifying
-    @Query("update users set balance = balance - :amount where id = :userId and balance is >= :amount")
+    @Query("update users set balance = balance - :amount where id = :userId and balance >= :amount")
     fun updateUserBalance(userId: Int, amount: Double): Mono<Boolean>
 }
