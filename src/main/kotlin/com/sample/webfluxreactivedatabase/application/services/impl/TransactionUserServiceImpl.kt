@@ -6,11 +6,13 @@ import com.sample.webfluxreactivedatabase.application.mapper.ToUserTransactionDt
 import com.sample.webfluxreactivedatabase.application.mapper.ToUserTransactionMapper
 import com.sample.webfluxreactivedatabase.application.mapper.ToUserTransactionResponseCustomMapper
 import com.sample.webfluxreactivedatabase.application.services.TransactionService
+import com.sample.webfluxreactivedatabase.domain.entity.UserTransaction
 import com.sample.webfluxreactivedatabase.domain.enums.TransactionStatus
 import com.sample.webfluxreactivedatabase.infrastructure.data.repository.UserRepository
 import com.sample.webfluxreactivedatabase.infrastructure.data.repository.UserTransactionRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
@@ -48,6 +50,11 @@ class TransactionUserServiceImpl(
             }
             .defaultIfEmpty(buildDeclinedResponse(transactionRequest))
     }
+
+    override fun retrieveByUserId(userId: Int): Flux<UserTransaction> {
+        return transactionRepository.findByUserId(userId)
+    }
+
 
     private fun buildDeclinedResponse(transactionRequest: TransactionDto): TransactionResponse {
         return TransactionResponse(
